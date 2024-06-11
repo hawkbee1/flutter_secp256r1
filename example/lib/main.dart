@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   String _publicKey = 'Unknown';
   String _signed = 'Unknown';
   bool? _verified;
-  String? _sharedSecret, _decrypted;
+  String? _certificate, _sharedSecret, _decrypted;
   Tuple2<Uint8List, Uint8List>? _encrypted;
 
   final _payloadTEC = TextEditingController(text: 'Hello world');
@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
         body: ListView(
           children: [
             SelectableText('getPublicKey: $_publicKey\n'),
+            SelectableText('certificate: $_certificate\n'),
             SelectableText('sign: $_signed\n'),
             SelectableText('verify: $_verified\n'),
             SelectableText('sharedSecret: $_sharedSecret\n'),
@@ -74,6 +75,15 @@ class _MyAppState extends State<MyApp> {
                 );
               },
               child: const Text('getPublicKey'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                SecureP256.getCertificate(
+                  alias,
+                  Uint8List.fromList(utf8.encode(_verifyPayload)),
+                ).then((r) => setState(() => _certificate = r.toString()));
+              },
+              child: const Text('getCertificate'),
             ),
             ElevatedButton(
               onPressed: () {
