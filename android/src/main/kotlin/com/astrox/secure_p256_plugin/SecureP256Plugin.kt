@@ -1,10 +1,10 @@
 package com.astrox.secure_p256_plugin
 
 import android.content.Context
-//import android.content.pm.PackageManager
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import android.util.Base64
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -58,7 +58,7 @@ class SecureP256Plugin : FlutterPlugin, MethodCallHandler {
                 "getCertificate" -> {
                     val alias = call.argument<String>("tag")!!
                     val certificate = getCertificate(alias)
-                    result.success(certificate.encoded)
+                    result.success(Base64.encodeToString(certificate.encoded, Base64.NO_WRAP))
                 }
 
                 "sign" -> {

@@ -20,10 +20,10 @@ class SecureP256Channel extends SecureP256Platform {
   }
 
   @override
-  Future<Uint8List> getCertificate(String tag, Uint8List payload) async {
+  Future<String> getCertificate(String tag) async {
     final signature = await methodChannel.invokeMethod(
       Methods.getCertificate,
-      {'tag': tag, 'payload': payload},
+      {'tag': tag},
     );
     return signature;
   }

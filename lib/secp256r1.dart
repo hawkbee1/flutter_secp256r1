@@ -23,11 +23,9 @@ class SecureP256 {
     }
   }
 
-  static Future<dynamic> getCertificate(String tag, Uint8List payload) async {
+  static Future<String> getCertificate(String tag) async {
     assert(tag.isNotEmpty);
-    assert(payload.isNotEmpty);
-    final certificate =
-        await SecureP256Platform.instance.getCertificate(tag, payload);
+    final certificate = await SecureP256Platform.instance.getCertificate(tag);
     return certificate;
   }
 
