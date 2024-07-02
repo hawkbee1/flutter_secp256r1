@@ -2,6 +2,7 @@ class Methods {
   const Methods._();
 
   static const getPublicKey = 'getPublicKey';
+  static const getTestPublicKey = 'getTestPublicKey';
   static const sign = 'sign';
   static const getCertificate = 'getCertificate';
   static const verify = 'verify';

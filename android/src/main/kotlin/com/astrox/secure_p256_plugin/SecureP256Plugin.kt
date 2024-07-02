@@ -55,6 +55,12 @@ class SecureP256Plugin : FlutterPlugin, MethodCallHandler {
                     result.success(keyPair.public.encoded)
                 }
 
+                "getTestPublicKey" -> {
+                    val keyPair = getKeyFromExemple()
+                    result.success(keyPair.public.encoded)
+                }
+
+
                 "getCertificate" -> {
                     val alias = call.argument<String>("tag")!!
                     val certificate = getCertificate(alias)
@@ -159,6 +165,27 @@ class SecureP256Plugin : FlutterPlugin, MethodCallHandler {
         }
         return keyPair
     }
+
+    @Synchronized
+    private fun getKeyFromExemple(): KeyPair {
+        val challenge = "thisIsMyTestChallenge"
+val keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore")
+keyPairGenerator.initialize(
+    KeyGenParameterSpec.Builder(
+        "key2",
+                   KeyProperties.PURPOSE_SIGN or
+                    KeyProperties.PURPOSE_VERIFY
+    )
+    .setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
+    .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA512)
+    .setUserAuthenticationRequired(true)
+    .setUserAuthenticationValidityDurationSeconds(5 * 60)
+    .setAttestationChallenge(challenge.toByteArray())
+    .build()
+)
+val keyPair: KeyPair = keyPairGenerator.generateKeyPair()
+return keyPair 
+}
 
     @Synchronized
     private fun sign(alias: String, payload: ByteArray): ByteArray {

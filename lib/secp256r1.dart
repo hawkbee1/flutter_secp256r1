@@ -23,6 +23,17 @@ class SecureP256 {
     }
   }
 
+  static Future<P256PublicKey> getTestPublicKey() async {
+    // assert(tag.isNotEmpty);
+    final raw = await SecureP256Platform.instance.getTestPublicKey();
+    // ECDSA starts with 0x04 and 65 length.
+    if (raw.lengthInBytes == 65) {
+      return P256PublicKey.fromRaw(raw);
+    } else {
+      return P256PublicKey.fromDer(raw);
+    }
+  }
+
   static Future<String> getCertificate(String tag) async {
     assert(tag.isNotEmpty);
     final certificate = await SecureP256Platform.instance.getCertificate(tag);

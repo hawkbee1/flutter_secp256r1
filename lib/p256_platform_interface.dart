@@ -29,6 +29,10 @@ abstract class SecureP256Platform extends PlatformInterface {
     return _instance.getPublicKey(tag);
   }
 
+  Future<Uint8List> getTestPublicKey() {
+    return _instance.getTestPublicKey();
+  }
+
   Future<dynamic> getCertificate(String tag) {
     return _instance.getCertificate(tag);
   }

@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   final _payloadTEC = TextEditingController(text: 'Hello world');
   final _othersPublicKeyTEC = TextEditingController();
 
-  String get alias => 'test_alias';
+  String get alias => 'key2';
 
   String get _verifyPayload => _payloadTEC.text;
 
@@ -44,8 +44,9 @@ class _MyAppState extends State<MyApp> {
         ),
         body: ListView(
           children: [
-            SelectableText('getPublicKey: $_publicKey\n'),
+            SelectableText('getTestPublicKey: $_publicKey\n'),
             SelectableText('certificate: $_certificate\n'),
+            SizedBox(height: 16),
             SelectableText('sign: $_signed\n'),
             SelectableText('verify: $_verified\n'),
             SelectableText('sharedSecret: $_sharedSecret\n'),
@@ -73,11 +74,11 @@ class _MyAppState extends State<MyApp> {
             ),
             ElevatedButton(
               onPressed: () {
-                SecureP256.getPublicKey(alias).then(
+                SecureP256.getTestPublicKey().then(
                   (r) => setState(() => _publicKey = hex.encode(r.rawKey)),
                 );
               },
-              child: const Text('getPublicKey'),
+              child: const Text('getTestPublicKey'),
             ),
             ElevatedButton(
               onPressed: () {
